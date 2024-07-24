@@ -46,19 +46,20 @@ def convert_to_gb(storage_str):
 # App title
 st.title("Laptop Price Prediction App")
 
-# Input fields
+# Input fields using select boxes
 company = st.selectbox('Company',
                        ['Apple', 'HP', 'Acer', 'Asus', 'Dell', 'Lenovo', 'Chuwi', 'MSI', 'Microsoft', 'Toshiba',
                         'Huawei', 'Xiaomi', 'Vero', 'Razer', 'Mediacom', 'Samsung', 'Google', 'Fujitsu', 'LG'])
 typename = st.selectbox('Type', ['Ultrabook', 'Notebook', 'Netbook', 'Gaming', 'Convertible', 'Workstation'])
 os = st.selectbox('Operating System', ['macOS', 'No OS', 'Windows', 'Linux', 'Android', 'Chrome OS'])
-inches = st.number_input('Inches', min_value=0.0, max_value=20.0, value=15.0)
-ram = st.number_input('Ram (GB)', min_value=2, max_value=64, value=8)
-weight = st.number_input('Weight (kg)', min_value=0.5, max_value=5.0, value=1.5)
-screen_resolution = st.text_input('Screen Resolution (e.g., 1920x1080)', '1920x1080')
-cpu = st.text_input('CPU', 'Intel Core i5')
-gpu = st.text_input('GPU', 'Intel HD Graphics 620')
-memory = st.text_input('Memory', '256GB SSD')
+inches = st.selectbox('Inches', np.arange(10.0, 20.1, 1))
+ram = st.selectbox('Ram (GB)', [4, 8, 16, 32, 64])
+weight = st.selectbox('Weight (kg)', np.arange(0.5, 5.1, 1))
+screen_resolution = st.selectbox('Screen Resolution',
+                                 ['1366x768', '1600x900', '1920x1080', '2560x1440', '2560x1600', '3840x2160'])
+cpu = st.selectbox('CPU', ['Intel Core i3', 'Intel Core i5', 'Intel Core i7', 'AMD', 'Other'])
+gpu = st.selectbox('GPU', ['Intel HD Graphics 620', 'AMD Radeon', 'Nvidia GeForce', 'Other'])
+memory = st.selectbox('Memory', ['128GB SSD', '256GB SSD', '512GB SSD', '1TB HDD', '2TB HDD', '256GB Flash Storage'])
 
 # Button to predict
 if st.button('Predict Price'):
@@ -121,4 +122,4 @@ if st.button('Predict Price'):
     prediction = model.predict(input_data)
 
     # Display the prediction
-    st.write(f"The predicted price of the laptop is: ${prediction[0]:.2f}")
+    st.write(f"##### The predicted price of the laptop is: ${prediction[0]:.2f}")
